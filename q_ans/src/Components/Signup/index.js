@@ -180,12 +180,12 @@ export default class signup extends Component {
             <div className="col-12">
               <div id="box1" className="col-4 mx-auto  bg-light">
                 <p id="form1" className="mx-auto text-center">
-                  <i className="text-center">Sign Up </i>
+                  Sign Up
                 </p>
-                <form name="myform1">
+                <form name="myform1" id="signupform">
                   <div className="form-group mt-2">
                     <label className="mb-1 label" htmlFor="name">
-                      Name
+                      First Name
                     </label>
                     <input
                       maxLength={25}
@@ -308,16 +308,18 @@ export default class signup extends Component {
                   </div>
 
                   <div className="text-center mt-3 mb-3">
-                    <button
-                      className="me-2 btnsubmit"
-                      style={{}}
-                      onClick={(e) => this.submitForm(e)}
-                    >
-                      Resister
-                    </button>
+                    <p>
+                      <button
+                        className="me-2 btnsubmit"
+                        style={{}}
+                        onClick={(e) => this.submitForm(e)}
+                      >
+                        Resister
+                      </button>
+                    </p>
                     <p className="mt-2">
                       Already have an account?
-                      <a style={{ display: "inline-block" }} className="ms-2">
+                      <a className="ms-2">
                         <Link to="/Signin">Login here</Link>
                       </a>
                     </p>

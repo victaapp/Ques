@@ -70,7 +70,7 @@ export default class Signin extends Component {
           
           <div id="box">
           <p id="form">
-            <i>Login</i>
+            Login
           </p>
             <label>User name</label>
 

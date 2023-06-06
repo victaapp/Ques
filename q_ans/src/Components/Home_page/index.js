@@ -17,7 +17,7 @@ const Home_page = () => {
       <div className="container">
         <div className="row mt-5">
           <div className="col-12 text-start mb-5">
-            <Link to="/signin" style={{ color: "#fff3cd" }}>
+            <Link to="/signin" style={{ color: "black" }}>
               Signin
             </Link>
           </div>

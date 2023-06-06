@@ -1,22 +1,4 @@
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #326abb !important;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-} */
-
-
-/* #formDiv {
-  text-align: center !important;
-} */
 #box1{
   background: white;
   /* border: 2px solid green; */
@@ -27,13 +9,19 @@ code {
   animation: exam 1s linear alternate;
 }
 
-.label{
-  display: flex;
-width: 80%;
-text-align: left;
+
+.label {
+  /* box-shadow: 9px 9px 25px black; */
+  /* background: green; */
+  color: #944545;
+  padding: 10px 0px 10px 0px;
+  /* border-radius: 50px 0 50px 0; */
+  width: 70%;
+  text-align: initial;
 }
-
-
+#signupform>.form-group{
+  display: flex !important;
+}
 
 #form1{
   color: #0f0e0e;
@@ -54,4 +42,16 @@ text-align: left;
   color:#fff;
   padding: 9px 30px;
   border: 10px;
+}
+
+@media only screen and (min-width:320px) and (max-width:576px){
+  #box1 {
+    background: white;
+    /* border: 2px solid green; */
+    padding: 50px 20px 5px 20px;
+    box-shadow: 9px 9px 25px black;
+    /* border-radius: 150px 0 150px 0; */
+    width: 100%;
+    animation: exam 1s linear alternate;
+}
 }
