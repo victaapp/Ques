@@ -1,21 +1,22 @@
 body {
   letter-spacing: 2px;
   padding: 25px;
-  font-family: "Poiret One", cursive;
-  font-weight: 900;
+  /* font-family: "Poiret One", cursive;
+  font-weight: 900; */
 }
 
 #form {
-  color: white;
-  width: 50%;
+  color: #fff;
+  width: 100%;
   height: 65px;
   padding: 11px;
   font-size: 25px;
-  box-shadow: 15px 15px 25px black;
+  background: rgb(161, 147, 149); 
+
+  /* box-shadow: 15px 15px 25px black;
   border: 2px solid green;
-  background: green;
   border-radius: 0 100px 0 100px;
-  animation: example 1s linear alternate;
+  animation: example 1s linear alternate; */
 }
 @keyframes example {
   100% {
@@ -28,29 +29,37 @@ body {
 }
 
 .form-control {
-  width: 90%;
-  border-bottom: 15px;
+  /* width: 90%; */
+  /* border-bottom: 15px;
   border: solid green;
-  box-shadow: 9px 9px 25px black;
-  margin-bottom: 20px;
-  margin-left: 10px;
+  box-shadow: 9px 9px 25px black; */
+  /* margin-bottom: 20px; */
+  /* margin-left: 10px;
   border-radius: 30px 0 30px 0;
-  padding: 5px 50px 5px 50px;
+  padding: 5px 50px 5px 30px; */
 }
+
 .form-control:focus {
   border: solid red;
   box-shadow: 15px 15px 25px black;
 }
-
+.text-decoration{
+  text-decoration: none !important;
+}
 #login {
-  background: white;
+  /* background: white;
   box-shadow: 9px 9px 25px black;
   text-decoration: none;
   border: 2px solid green;
   padding: 5px 25px 5px 25px;
   font-size: 15px;
   color: black;
-  border-radius: 50px 0 50px 0;
+  border-radius: 50px 0 50px 0; */
+  width: 100%;
+  background: #326abb;
+  padding: 7px 15px;
+  border: 10px;
+  color: #fff;
 }
 
 #login:focus {
@@ -61,14 +70,16 @@ body {
 
 #box {
   background: white;
-  border: 2px solid green;
-  padding: 55px;
+  /* border: 2px solid green; */
+  padding: 40px;
   box-shadow: 9px 9px 25px black;
-  border-radius: 150px 0 150px 0;
-  width: 25%;
+  /* border-radius: 150px 0 150px 0; */
+  width: 30%;
   margin-top: 50px;
   animation: exam 1s linear alternate;
 }
+
+
 
 @keyframes exam {
   100% {
@@ -81,15 +92,23 @@ body {
 }
 
 label {
-  box-shadow: 9px 9px 25px black;
-  background: green;
-  color: white;
-  padding: 10px 50px 10px 50px;
-  border-radius: 50px 0 50px 0;
+  /* box-shadow: 9px 9px 25px black; */
+  /* background: green; */
+  color: #944545;
+  padding: 10px 50px 10px 0px;
+  /* border-radius: 50px 0 50px 0; */
   width: 100%;
+  text-align: initial;
 }
 
 input[type="text"],
 input[type="password"] {
   outline: none;
+}
+
+
+@media only screen and (min-width:320px) and (max-width:576px){
+  #box{
+    width: 100%;
+  }
 }

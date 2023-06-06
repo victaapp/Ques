@@ -8,24 +8,23 @@ const Home_page = () => {
   // const [currentPage, setCurrentPage] = useState(0);
   localStorage.setItem("volunteer", false);
   const getQuestions = () => {
-    
     setVolunteer(true);
     localStorage.setItem("volunteer", true);
-
   };
 
   return (
     <div className="">
       <div className="container">
-
         <div className="row mt-5">
-        <div className="col-12 text-start mb-5">
-        <Link to="/signin" style={{color:"#fff3cd"}}>
-        Signin
-      </Link>
-        </div>
+          <div className="col-12 text-start mb-5">
+            <Link to="/signin" style={{ color: "#fff3cd" }}>
+              Signin
+            </Link>
+          </div>
           <div className="col-6 text-start">
-            <button className="btn btn-dark">User</button>
+            <Link to="/All_Questions">
+              <button className="btn btn-dark">User</button>
+            </Link>
             <Link to="/All_Questions">
               <button className="btn btn-dark ms-4" onClick={getQuestions}>
                 Volunteer
