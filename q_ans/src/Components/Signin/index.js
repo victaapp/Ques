@@ -34,8 +34,15 @@ export default class Signin extends Component {
       .post(`${Base_url}/api/login/`, data)
       .then((res) => {
         alert("Signin Successfull");
-        window.location.href = "/All_Questions";
-        localStorage.setItem("signin", true);
+        let isPost = localStorage.getItem("ThroughPost");
+        if (isPost === "true") {
+          window.location.href = "/Post_Question";
+          window.localStorage.setItem("Login_token", res.data.access);
+        } else {
+          window.location.href = "/All_Questions";
+          window.localStorage.setItem("Login_token", res.data.access);
+        }
+        // localStorage.setItem("signin", true);
       })
       .catch((err) => {});
 
@@ -67,12 +74,9 @@ export default class Signin extends Component {
     return (
       <form name="myform">
         <center>
-          
           <div id="box">
-          <p id="form">
-            Login
-          </p>
-            <label>User name</label>
+            <p id="form">Login</p>
+            <label className="signinlabel">User name</label>
 
             <input
               placeholder="Email..."
@@ -80,22 +84,26 @@ export default class Signin extends Component {
                 this.handleuserName(e);
               }}
               type="text"
-              className="form-control"
+              className="form-control signin-form-control"
               name="user"
             />
             <br />
-            <label>Password </label>
+            <label className="signinlabel">Password </label>
             <input
               placeholder="Password..."
               onChange={(e) => {
                 this.handlePassword(e);
               }}
               type="password"
-              className="form-control"
+              className="form-control signin-form-control"
               name="pass"
             />
             <div className="d-flex">
-             <input type="checkbox" /><span> Remember me</span><Link to="/Forgot_password" className="ms-3 text-decoration">Forgot password?</Link>
+              <input type="checkbox" />
+              <span> Remember me</span>
+              <Link to="/Forgot_password" className="ms-3 text-decoration">
+                Forgot password?
+              </Link>
             </div>
             <br />
             <div className="mt-2">
@@ -112,7 +120,9 @@ export default class Signin extends Component {
             <div className="mt-3">
               <p>
                 Not a member?
-                <Link to="/Signup" className="text-decoration">Sign up now </Link>
+                <Link to="/Signup" className="text-decoration">
+                  Sign up now{" "}
+                </Link>
               </p>
             </div>
           </div>

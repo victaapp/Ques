@@ -8,6 +8,7 @@ import { Route, Router, Routes } from 'react-router-dom';
 import All_Questions from './Components/All_Questions';
 import Signin from './Components/Signin';
 import Signup from './Components/Signup';
+import Post_Question from './Components/Post_Question';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
        <Route path='/All_Questions' element={<All_Questions />}/>
        <Route path='/Signin' element={<Signin />}/>
        <Route path='/Signup' element={<Signup />}/>
+       <Route path='/Post_Question' element={<Post_Question/>} />
       </Routes>
     </div>
   );

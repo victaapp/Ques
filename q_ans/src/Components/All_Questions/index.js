@@ -12,10 +12,7 @@ const AllQuestions = () => {
   const [allQuestions, setAllQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
-  const [isTruncated, setIsTruncated] = useState(true);
-
   const itemsPerPage = 10;
-
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
@@ -23,7 +20,6 @@ const AllQuestions = () => {
     axios
       .get(`${Base_url}/api/all-questions/`)
       .then((res) => {
-        // debugger;
         setAllQuestions(res.data);
       })
       .catch((err) => {
@@ -36,21 +32,41 @@ const AllQuestions = () => {
     const loadedItems = allQuestions.slice(startIndex, endIndex);
     setCurrentItems(loadedItems);
   }, [allQuestions, currentPage]);
-  const PostQuestion = () => {};
+  const handlePost = (event) => {
+    const target =
+      event.target.parentElement.parentElement.parentElement.parentElement
+        .parentElement.parentElement.parentElement.firstChild.children[0]
+        .lastElementChild.lastElementChild.innerText;
+
+    // event.target.parentElement.parentElement.parentElement.parentElement
+    // .parentElement.parentElement.parentElement.previousElementSibling
+    // .firstElementChild.children[2].lastChild.innerText
+
+    if (target == "Signin") {
+      window.location.href = "/signin";
+      localStorage.setItem("ThroughPost",true)
+    }
+    else{
+      window.location.href = "/Post_Question";
+
+    }
+  };
   return (
     <>
       <Navbar />
       <div className="container">
-        <div></div>
         <div className="row">
           <div className="col-1"></div>
-          <div className="col-11">
-            {volunteer === "true" ? (
+          <div className="col-10">
+            {volunteer === "true"? (
               <div className="container">
                 <div className="row">
                   <div className="col-12 d-flex justify-content-between mt-4">
                     <h1 className="text-start text-info">All Questions</h1>
-                    <button className="btn btn-success" onClick={PostQuestion}>
+                    <button
+                      className="btn btn-outline-success postquestion btn-lg"
+                      onClick={(event) => handlePost(event)}
+                    >
                       Post Question
                     </button>
                   </div>
@@ -59,24 +75,21 @@ const AllQuestions = () => {
                       {currentItems.map((ques) => (
                         <>
                           <br />
-                          <li className="text-light">
+                          <li className="text-dark">
                             <div>
-                              <p className="text-info">{ques.title}</p>
+                              <p className="text-info h5">{ques.title}</p>
 
                               <TextTruncateToggle
                                 text={ques.description}
-                                truncateLength={300}
+                                truncateLength={280}
                               />
-
-                              <div className="text-dark">
-                                Ask By
-                                <i className="text-danger">
-                                  {" "}
-                                  {ques.ask_byy.username}{" "}
+                              <div className="text-dark mt-3 text-end">
+                                <span className="me-2"> Ask By</span>
+                                <i className="text-danger mx-1">
+                                  {ques.ask_byy.username}
                                 </i>
-                                on{" "}
-                                <span className="text-dark">
-                                  {" "}
+                                <span className="mx-1">on</span>
+                                <span className="text-dark h6">
                                   {moment(ques.ask_byy.date_joined).format(
                                     "YYYY-MM-DD"
                                   )}
@@ -110,6 +123,7 @@ const AllQuestions = () => {
               ""
             )}
           </div>
+          <div className="col-1"></div>
         </div>
       </div>
     </>

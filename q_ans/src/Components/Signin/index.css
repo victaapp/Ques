@@ -34,7 +34,7 @@
   padding: 5px 50px 5px 30px; */
 }
 
-.form-control:focus {
+.signin-form-control:focus {
   border: solid red;
   box-shadow: 15px 15px 25px black;
 }
@@ -86,7 +86,7 @@
   }
 }
 
-label {
+.signinlabel {
   /* box-shadow: 9px 9px 25px black; */
   /* background: green; */
   color: #944545;

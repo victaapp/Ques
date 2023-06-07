@@ -162,7 +162,6 @@ export default class signup extends Component {
       axios
         .post(`${Base_url}/api/user-registeration/`, postdata)
         .then((res) => {
-          console.log(res);
           alert("Yeah! Signed Up Successfully");
           window.location.href = "/signin";
         })
@@ -184,7 +183,7 @@ export default class signup extends Component {
                 </p>
                 <form name="myform1" id="signupform">
                   <div className="form-group mt-2">
-                    <label className="mb-1 label" htmlFor="name">
+                    <label className="mb-1 signuplabel" htmlFor="name">
                       First Name
                     </label>
                     <input
@@ -201,7 +200,7 @@ export default class signup extends Component {
                     />
                   </div>
                   <div className="form-group mt-2">
-                    <label className="mb-1 label" htmlFor="last_name">
+                    <label className="mb-1 signuplabel" htmlFor="last_name">
                       Last Name
                     </label>
                     <input
@@ -218,7 +217,7 @@ export default class signup extends Component {
                     />
                   </div>
                   <div className="form-group mt-2">
-                    <label className="label" htmlFor="Username">
+                    <label className="signuplabel" htmlFor="Username">
                       Username
                     </label>
                     <input
@@ -235,7 +234,7 @@ export default class signup extends Component {
                     />
                   </div>
                   <div className="form-group mt-2">
-                    <label className="mb-1 label" htmlFor="email">
+                    <label className="mb-1 signuplabel" htmlFor="email">
                       Email
                     </label>
                     <input
@@ -270,7 +269,7 @@ export default class signup extends Component {
                 </div>*/}
 
                   <div className="form-group mt-2">
-                    <label className="label mb-1" htmlFor="password">
+                    <label className="signuplabel mb-1" htmlFor="password">
                       Password
                     </label>
                     <input
@@ -289,7 +288,7 @@ export default class signup extends Component {
                   </div>
 
                   <div className="form-group mt-2">
-                    <label className="label mb-1" htmlFor="con_password">
+                    <label className="signuplabel mb-1" htmlFor="con_password">
                       Confirm Password
                     </label>
                     <input

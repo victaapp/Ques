@@ -1,0 +1,13 @@
+.ql-editor {
+  
+  height: 250px;
+  background: #fff;
+}
+
+.ql-toolbar{
+  text-align: initial !important;
+}
+
+#showerr{
+  display: none;
+}
