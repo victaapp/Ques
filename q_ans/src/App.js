@@ -9,6 +9,7 @@ import All_Questions from './Components/All_Questions';
 import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Post_Question from './Components/Post_Question';
+import Ques_Answer from './Components/Ques_Answer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
        <Route path='/Signin' element={<Signin />}/>
        <Route path='/Signup' element={<Signup />}/>
        <Route path='/Post_Question' element={<Post_Question/>} />
+       <Route path='/Ques_Answer' element={<Ques_Answer/>}/>
       </Routes>
     </div>
   );

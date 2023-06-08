@@ -7,10 +7,11 @@ const Home_page = () => {
   const [volunteer, setVolunteer] = useState(false);
   // const [currentPage, setCurrentPage] = useState(0);
   // localStorage.setItem("Login_token", "false");
-  localStorage.setItem("volunteer", false);
+  localStorage.setItem("volunteer", volunteer);
   const getQuestions = () => {
+    debugger
     setVolunteer(true);
-    localStorage.setItem("volunteer", true);
+    localStorage.setItem("volunteer", volunteer);
   };
 
   return (

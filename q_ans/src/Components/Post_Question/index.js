@@ -18,13 +18,15 @@ const TextEditor = () => {
     return tempDivElement.textContent || tempDivElement.innerText || "";
   };
   const handleAskQuestion = () => {
-
     const plainTextContent = removeTags(des);
     console.log(plainTextContent);
     const data = {
       title: title,
       description: plainTextContent,
     };
+    if(plainTextContent ==='' && title ===''){
+      document.getElementById("showerr").style.display="block";
+    }
     axios
       .post(`${Base_url}/api/all-questions/`, data, {
         headers: {
@@ -33,7 +35,7 @@ const TextEditor = () => {
         },
       })
       .then((res) => {
-        window.location.href = "/All_Questions";
+        // window.location.href = "/All_Questions";
         console.log(res.data);
       })
       .catch((err) => {
@@ -73,8 +75,8 @@ const TextEditor = () => {
               ],
             }}
           />
-          <Alert key="danger" variant="danger" id="showerr">
-            This is a alert—check it out!
+          <Alert className="mt-3" key="danger" variant="danger" id="showerr">
+            Please fill the all details
           </Alert>
           <button
             className="btn btn-outline-secondary mt-4"
