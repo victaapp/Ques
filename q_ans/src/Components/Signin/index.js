@@ -34,8 +34,12 @@ export default class Signin extends Component {
       .post(`${Base_url}/api/login/`, data)
       .then((res) => {
         alert("Signin Successfull");
+        const QID = localStorage.getItem("QID");
         let isPost = localStorage.getItem("ThroughPost");
-        if (isPost === "true") {
+        if (QID !== null) {
+          window.location.href = "/Ques_Answer/";
+          window.localStorage.setItem("Login_token", res.data.access);
+        } else if (isPost === "true") {
           window.location.href = "/Post_Question";
           window.localStorage.setItem("Login_token", res.data.access);
         } else {

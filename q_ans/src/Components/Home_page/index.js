@@ -9,7 +9,6 @@ const Home_page = () => {
   // localStorage.setItem("Login_token", "false");
   localStorage.setItem("volunteer", volunteer);
   const getQuestions = () => {
-    debugger
     setVolunteer(true);
     localStorage.setItem("volunteer", volunteer);
   };

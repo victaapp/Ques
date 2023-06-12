@@ -9,16 +9,16 @@ import "./index.css";
 import TextTruncateToggle from "../Truncate";
 // import { useHistory } from 'react-router-dom';
 const AllQuestions = () => {
+  localStorage.removeItem("QID");
   const volunteer = localStorage.getItem("volunteer");
+  const Login_token = localStorage.getItem("Login_token");
   const [allQuestions, setAllQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const itemsPerPage = 10;
-
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
-
   useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/`)
@@ -29,21 +29,19 @@ const AllQuestions = () => {
         console.log(err);
       });
   }, []);
-
   useEffect(() => {
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const loadedItems = allQuestions.slice(startIndex, endIndex);
     setCurrentItems(loadedItems);
   }, [allQuestions, currentPage]);
-
   const handlePost = (event) => {
-    const target =
-      event.target.parentElement.parentElement.parentElement.parentElement
-        .parentElement.parentElement.parentElement.firstChild.children[0]
-        .lastElementChild.lastElementChild.innerText;
+    // const target =
+    //   event.target.parentElement.parentElement.parentElement.parentElement
+    //     .parentElement.parentElement.parentElement.firstChild.children[0]
+    //     .lastElementChild.lastElementChild.innerText;
 
-    if (target === "Signin") {
+    if (Login_token === null) {
       window.location.href = "/signin";
       localStorage.setItem("ThroughPost", true);
     } else {
@@ -82,6 +80,7 @@ const AllQuestions = () => {
                       {currentItems.map((ques) => (
                         <React.Fragment key={ques.id}>
                           <br />
+                          <br />
                           <li className="text-dark">
                             <div>
                               <p
@@ -95,7 +94,7 @@ const AllQuestions = () => {
                                 text={ques.description}
                                 truncateLength={280}
                               />
-                              <div className="text-dark mt-3 text-end">
+                              <div className="text-dark mt-2 text-end">
                                 <span className="me-2">Ask By</span>
                                 <i className="text-danger mx-1">
                                   {ques.ask_byy.username}

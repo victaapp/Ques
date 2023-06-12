@@ -2,17 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Signin from "../Signin/index";
 import "./index.css";
+import logo from "../images/logo.png";
 const Navbar = () => {
   const HandleSignOut = () => {
     localStorage.removeItem("Login_token");
+    localStorage.removeItem("ThroughPost");
   };
   const signin = localStorage.getItem("Login_token");
-
+const HandleSignIn = ()=>{
+  const QID = localStorage.getItem("QID");
+  if(QID !==null){
+    window.location.href = "/Signin";
+    localStorage.removeItem("ThroughPost");
+  }
+}
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand ms-5" href="#">
-          Navbar
+        <a className="navbar-brand ms-5" href="/">
+          <img src={logo} alt="logo" />
         </a>
         <button
           className="navbar-toggler"
@@ -64,6 +72,7 @@ const Navbar = () => {
                   id="signbtn"
                   to="/signin"
                   style={{ textDecoration: "none", color: "#198754" }}
+                  onClick={HandleSignIn}
                 >
                   Signin
                 </Link>

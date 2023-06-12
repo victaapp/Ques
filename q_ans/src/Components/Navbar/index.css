@@ -4,6 +4,14 @@
 #signbtn:hover{
   color: #fff !important;
 } 
+
+.navbar-brand>img{
+  width: 150px !important;
+}
+
+
+
+
 @media only screen and (min-width:320px) and (max-width:576px){
 
 .nav-item{
