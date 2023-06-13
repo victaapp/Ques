@@ -7,12 +7,20 @@ const Home_page = () => {
   const [volunteer, setVolunteer] = useState(false);
   // const [currentPage, setCurrentPage] = useState(0);
   // localStorage.setItem("Login_token", "false");
+  localStorage.setItem("OnlyUser", false);
   localStorage.setItem("volunteer", volunteer);
+  localStorage.removeItem("QID");
+  localStorage.removeItem("user");
+
   const getQuestions = () => {
+    window.location.href = "/All_Questions";
     setVolunteer(true);
     localStorage.setItem("volunteer", volunteer);
   };
-
+  const OnlyUser = () => {
+    window.location.href = "/All_Questions";
+    localStorage.setItem("OnlyUser", true);
+  };
   return (
     <div className="">
       <div className="container">
@@ -23,14 +31,13 @@ const Home_page = () => {
             </Link>
           </div>
           <div className="col-6 text-start">
-            <Link to="/All_Questions">
-              <button className="btn btn-dark">User</button>
-            </Link>
-            <Link to="/All_Questions">
-              <button className="btn btn-dark ms-4" onClick={getQuestions}>
-                Volunteer
-              </button>
-            </Link>
+            <button className="btn btn-dark" onClick={OnlyUser}>
+              User
+            </button>
+
+            <button className="btn btn-dark ms-4" onClick={getQuestions}>
+              Volunteer
+            </button>
           </div>
         </div>
         <div className="row mt-5"></div>

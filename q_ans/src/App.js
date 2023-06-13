@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
-
 import Home_page from './Components/Home_page';
 import { Route, Router, Routes } from 'react-router-dom';
 import All_Questions from './Components/All_Questions';
@@ -10,10 +9,8 @@ import Signin from './Components/Signin';
 import Signup from './Components/Signup';
 import Post_Question from './Components/Post_Question';
 import Ques_Answer from './Components/Ques_Answer';
-
 function App() {
   return (
-    
     <div className="App">
       <Routes>
        <Route path='/' element={<Home_page/>} />
@@ -26,5 +23,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

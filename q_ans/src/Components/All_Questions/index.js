@@ -9,7 +9,7 @@ import "./index.css";
 import TextTruncateToggle from "../Truncate";
 // import { useHistory } from 'react-router-dom';
 const AllQuestions = () => {
-  localStorage.removeItem("QID");
+  // localStorage.removeItem("QID");
   const volunteer = localStorage.getItem("volunteer");
   const Login_token = localStorage.getItem("Login_token");
   const [allQuestions, setAllQuestions] = useState([]);
@@ -41,11 +41,21 @@ const AllQuestions = () => {
     //     .parentElement.parentElement.parentElement.firstChild.children[0]
     //     .lastElementChild.lastElementChild.innerText;
 
-    if (Login_token === null) {
+    if (Login_token === null&&volunteer==="true") {
       window.location.href = "/signin";
       localStorage.setItem("ThroughPost", true);
-    } else {
+      localStorage.removeItem("Edit");
+    } 
+    
+   else if (Login_token === null && volunteer==="false") {
+      window.location.href = "/Signup";
+      // localStorage.setItem("ThroughPost", true);
+      // localStorage.removeItem("Edit");
+    }
+    
+    else {
       window.location.href = "/Post_Question";
+      localStorage.removeItem("Edit");
     }
   };
   // let history = useHistory ();
@@ -60,79 +70,74 @@ const AllQuestions = () => {
     <>
       <Navbar />
       <div className="container">
-        <div className="row">
-          <div className="col-1"></div>
+        <div className="row justify-content-center">
           <div className="col-10">
-            {volunteer === "true" ? (
-              <div className="container">
-                <div className="row">
-                  <div className="col-12 d-flex justify-content-between mt-4">
-                    <h1 className="text-start text-info">All Questions</h1>
-                    <button
-                      className="btn btn-outline-success postquestion btn-lg"
-                      onClick={handlePost}
-                    >
-                      Post Question
-                    </button>
-                  </div>
-                  <div className="col-12">
-                    <ol className="text-start">
-                      {currentItems.map((ques) => (
-                        <React.Fragment key={ques.id}>
-                          <br />
-                          <br />
-                          <li className="text-dark">
-                            <div>
-                              <p
-                                className="text-info h5"
-                                onClick={() => GoToAnswer(ques)}
-                              >
-                                {ques.title}
-                              </p>
-
-                              <TextTruncateToggle
-                                text={ques.description}
-                                truncateLength={280}
-                              />
-                              <div className="text-dark mt-2 text-end">
-                                <span className="me-2">Ask By</span>
-                                <i className="text-danger mx-1">
-                                  {ques.ask_byy.username}
-                                </i>
-                                <span className="mx-1">on</span>
-                                <span className="text-dark h6">
-                                  {moment(ques.ask_byy.date_joined).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                        </React.Fragment>
-                      ))}
-                    </ol>
-                  </div>
+            <div className="container">
+              <div className="row ms-auto">
+                <div className="col-10 mx-auto d-flex justify-content-between mt-4">
+                  <h1 className="text-start text-info">All Questions</h1>
+                  <button
+                    className="btn btn-outline-success postquestion btn-lg"
+                    onClick={handlePost}
+                  >
+                    Post Question
+                  </button>
                 </div>
+                <div className="col-10 mx-auto">
+                  <ol className="text-start">
+                    {currentItems.map((ques) => (
+                      <React.Fragment key={ques.id}>
+                        <br />
+                        <br />
+                        <li className="text-dark">
+                          <div>
+                            <p
+                              className="text-info h5"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => GoToAnswer(ques)}
+                            >
+                              {ques.title}
+                            </p>
 
-                <ReactPaginate
-                  previousLabel={"Previous"}
-                  nextLabel={"Next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={Math.ceil(allQuestions.length / itemsPerPage)}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={handlePageChange}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
+                            <TextTruncateToggle
+                              text={ques.description}
+                              truncateLength={280}
+                            />
+                            <div className="text-dark mt-2 text-end">
+                              <span className="me-2">Ask By</span>
+                              <i className="text-danger mx-1">
+                                {ques.ask_byy.username}
+                              </i>
+                              <span className="mx-1">on</span>
+                              <span className="text-dark h6">
+                                {moment(ques.ask_byy.date_joined).format(
+                                  "YYYY-MM-DD"
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </React.Fragment>
+                    ))}
+                  </ol>
+                </div>
               </div>
-            ) : (
-              ""
-            )}
+
+              <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={Math.ceil(allQuestions.length / itemsPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageChange}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
+            </div>
           </div>
-          <div className="col-1"></div>
         </div>
       </div>
     </>

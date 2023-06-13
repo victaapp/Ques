@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./index.css";
@@ -8,9 +8,13 @@ import { Alert } from "react-bootstrap";
 const TextEditor = () => {
   const [des, setDes] = useState("");
   const [title, setTitle] = useState("");
+  const [editTitle, setEditTitle] = useState("");
+  const [editDes, setEditData] = useState("");
   const Login_token = localStorage.getItem("Login_token");
+  const QID = localStorage.getItem("QID");
+  const isEdit = localStorage.getItem("Edit");
   const HandleChange = (e) => {
-    setDes(e);
+    isEdit === "true" ? setEditData(e) : setDes(e);
   };
   const removeTags = (html) => {
     const tempDivElement = document.createElement("ReactQuill");
@@ -18,14 +22,14 @@ const TextEditor = () => {
     return tempDivElement.textContent || tempDivElement.innerText || "";
   };
   const handleAskQuestion = () => {
-    const plainTextContent = removeTags(des);
+    const plainTextContent = removeTags(isEdit === "true" ? editDes : des);
     console.log(plainTextContent);
     const data = {
-      title: title,
+      title: isEdit === "true" ? editTitle : title,
       description: plainTextContent,
     };
-    if(plainTextContent ==='' && title ===''){
-      document.getElementById("showerr").style.display="block";
+    if (plainTextContent === "" && title === "") {
+      document.getElementById("showerr").style.display = "block";
     }
     axios
       .post(`${Base_url}/api/all-questions/`, data, {
@@ -35,14 +39,25 @@ const TextEditor = () => {
         },
       })
       .then((res) => {
-        // window.location.href = "/All_Questions";
-        console.log(res.data);
+        alert(isEdit==="true" ?"Question Updated Successfully":"Question Posted Successfully");
+        window.location.href = "/All_Questions";
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
+  useEffect(() => {
+    if (isEdit === "true") {
+      axios
+        .get(`${Base_url}/api/all-questions/${QID}/`)
+        .then((res) => {
+          setEditData(res.data.description);
+          setEditTitle(res.data.title);
+        })
+        .catch((err) => {});
+    }
+  }, []);
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -53,8 +68,12 @@ const TextEditor = () => {
               <input
                 type="text"
                 className="form-control"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={isEdit === "true" ? editTitle : title}
+                onChange={(e) =>
+                  isEdit === "true"
+                    ? setEditTitle(e.target.value)
+                    : setTitle(e.target.value)
+                }
                 placeholder="Be specific and imagine you’re asking a question to another person."
               />
             </div>
@@ -62,7 +81,7 @@ const TextEditor = () => {
         </div>
         <div className="col-8 mt-5">
           <ReactQuill
-            value={des}
+            value={isEdit === "true" ? editDes : des}
             onChange={HandleChange}
             placeholder="Start typing your question..."
             modules={{

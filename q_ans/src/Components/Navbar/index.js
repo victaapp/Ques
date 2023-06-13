@@ -14,6 +14,9 @@ const HandleSignIn = ()=>{
   if(QID !==null){
     window.location.href = "/Signin";
     localStorage.removeItem("ThroughPost");
+  }else{
+        window.location.href = "/Signin";
+
   }
 }
   return (

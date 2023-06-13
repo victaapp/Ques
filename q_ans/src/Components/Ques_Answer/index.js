@@ -8,20 +8,30 @@ import { Alert } from "react-bootstrap";
 import "./index.css";
 import Navbar from "../Navbar";
 import TextTruncateToggle from "../Truncate/index";
+import { Link } from "react-router-dom";
 export default function Ques_Answer() {
   const [question, setQuestion] = useState(null);
   const [ans, setAns] = useState(null);
   const [giveAns, setGiveAns] = useState(null);
+  const [userinfo, setUserInfo] = useState("");
   const QID = Number(localStorage.getItem("QID"));
   const Login_token = localStorage.getItem("Login_token");
+  const User = localStorage.getItem("user");
+  localStorage.setItem("Edit", false);
+// debugger
+// console.log(User)
+  // const history = useHistory();
   useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/${QID}/`)
       .then((res) => {
+        setUserInfo(res.data.ask_byy.username);
         setQuestion(res.data);
       })
       .catch((err) => {});
+  }, []);
 
+  useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/${QID}/answers/`)
       .then((res) => {
@@ -58,13 +68,13 @@ export default function Ques_Answer() {
         })
         .then((res) => {
           alert("Answer Posted Successfully");
-          window.location.href = "/All_Questions";
+          window.location.href = "/Ques_Answer";
         })
         .catch((err) => {});
     }
   };
   const handlePost = () => {
-    localStorage.removeItem("QID");
+    // localStorage.removeItem("QID");
     localStorage.setItem("ThroughPost", true);
     if (Login_token !== null) {
       window.location.href = "/Post_Question";
@@ -73,8 +83,11 @@ export default function Ques_Answer() {
       window.location.href = "/signin";
     }
   };
-
-  // },[])
+  const handleEdit = () => {
+    window.location.href = "/Post_Question";
+    // history.push("/Post_Question");
+    localStorage.setItem("Edit", true);
+  };
 
   if (question === null) {
     return <div>Loading...</div>;
@@ -83,6 +96,16 @@ export default function Ques_Answer() {
     <div className="container-fluied">
       <Navbar />
       <div className="col-8 d-flex mx-auto justify-content-end mt-4">
+        {User === userinfo ? (
+          <button
+            className="btn btn-outline-success postquestion btn-lg me-3"
+            onClick={handleEdit}
+          >
+            Edit Question
+          </button>
+        ) : (
+          ""
+        )}
         <button
           className="btn btn-outline-success postquestion btn-lg"
           onClick={handlePost}

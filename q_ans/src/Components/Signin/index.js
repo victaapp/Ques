@@ -14,12 +14,10 @@ export default class Signin extends Component {
       password: "",
     };
   }
-
   handleuserName = (e) => {
     username = e.target.value;
     this.setState({ username: e.target.value });
   };
-
   handlePassword = (e) => {
     password = e.target.value;
     this.setState({ password: e.target.value });
@@ -33,13 +31,20 @@ export default class Signin extends Component {
     axios
       .post(`${Base_url}/api/login/`, data)
       .then((res) => {
-        alert("Signin Successfull");
+        // alert("Signin Successfull");
         const QID = localStorage.getItem("QID");
-        let isPost = localStorage.getItem("ThroughPost");
-        if (QID !== null) {
+        const volunteer = localStorage.getItem("volunteer");
+        const isPost = localStorage.getItem("ThroughPost");
+        const OnlyUser = localStorage.getItem("OnlyUser");
+        localStorage.setItem("user", this.state.username);
+        if (volunteer === "false" && QID !== null) {
+          localStorage.setItem("volunteer", true);
+          window.location.href = "/All_Questions";
+          window.localStorage.setItem("Login_token", res.data.access);
+        } else if (QID !== null) {
           window.location.href = "/Ques_Answer/";
           window.localStorage.setItem("Login_token", res.data.access);
-        } else if (isPost === "true") {
+        } else if (isPost === "true" ||(volunteer==="false"&&OnlyUser==="false")) {
           window.location.href = "/Post_Question";
           window.localStorage.setItem("Login_token", res.data.access);
         } else {

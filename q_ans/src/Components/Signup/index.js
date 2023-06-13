@@ -162,7 +162,7 @@ export default class signup extends Component {
       axios
         .post(`${Base_url}/api/user-registeration/`, postdata)
         .then((res) => {
-          alert("Yeah! Signed Up Successfully");
+          // alert("Yeah! Signed Up Successfully");
           window.location.href = "/signin";
         })
         .catch((err) => {
