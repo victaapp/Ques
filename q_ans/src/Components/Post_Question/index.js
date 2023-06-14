@@ -5,6 +5,7 @@ import "./index.css";
 import axios from "axios";
 import { Base_url } from "../../Config";
 import { Alert } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
 const TextEditor = () => {
   const [des, setDes] = useState("");
   const [title, setTitle] = useState("");
@@ -13,6 +14,7 @@ const TextEditor = () => {
   const Login_token = localStorage.getItem("Login_token");
   const QID = localStorage.getItem("QID");
   const isEdit = localStorage.getItem("Edit");
+  const Navigate=useNavigate();
   const HandleChange = (e) => {
     isEdit === "true" ? setEditData(e) : setDes(e);
   };
@@ -58,10 +60,16 @@ const TextEditor = () => {
         .catch((err) => {});
     }
   }, []);
+
+  const Back = ()=>{
+    Navigate(-1);
+  }
   return (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-8">
+        <button className="btn btn-outline-success px-5 mt-5 d-flex" onClick={Back}>Back</button>
+
           <form>
             <div className="mt-5 form-group">
               <p className="text-start h6">Title</p>

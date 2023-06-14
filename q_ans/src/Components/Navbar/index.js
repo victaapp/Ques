@@ -11,20 +11,21 @@ const Navbar = () => {
   const signin = localStorage.getItem("Login_token");
 const HandleSignIn = ()=>{
   const QID = localStorage.getItem("QID");
-  if(QID !==null){
-    window.location.href = "/Signin";
-    localStorage.removeItem("ThroughPost");
-  }else{
-        window.location.href = "/Signin";
+  localStorage.setItem("signin",true)
+  // if(QID !==null){
+  //   window.location.href = "/Signin";
+  //   localStorage.removeItem("ThroughPost");
+  // }else{
+  //       window.location.href = "/Signin";
 
-  }
+  // }
 }
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand ms-5" href="/">
+        <Link className="navbar-brand ms-5" to="/">
           <img src={logo} alt="logo" />
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -39,9 +40,9 @@ const HandleSignIn = ()=>{
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
+              <Link className="nav-link active" aria-current="page" to="/">
                 Home
-              </a>
+              </Link>
             </li>
           </ul>
           <form className="d-flex me-5">

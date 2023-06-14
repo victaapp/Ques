@@ -9,16 +9,16 @@ const Home_page = () => {
   // localStorage.setItem("Login_token", "false");
   localStorage.setItem("OnlyUser", false);
   localStorage.setItem("volunteer", volunteer);
-  localStorage.removeItem("QID");
-  localStorage.removeItem("user");
+  // localStorage.removeItem("QID");
+  // localStorage.removeItem("user");
 
   const getQuestions = () => {
-    window.location.href = "/All_Questions";
+    // window.location.href = "/All_Questions";
     setVolunteer(true);
     localStorage.setItem("volunteer", volunteer);
   };
   const OnlyUser = () => {
-    window.location.href = "/All_Questions";
+    // window.location.href = "/All_Questions";
     localStorage.setItem("OnlyUser", true);
   };
   return (
@@ -31,13 +31,17 @@ const Home_page = () => {
             </Link>
           </div>
           <div className="col-6 text-start">
-            <button className="btn btn-dark" onClick={OnlyUser}>
-              User
-            </button>
+            <Link to='/All_Questions'>
+              <button className="btn btn-dark" onClick={OnlyUser}>
+                User
+              </button>
+            </Link>
 
-            <button className="btn btn-dark ms-4" onClick={getQuestions}>
-              Volunteer
-            </button>
+            <Link to="/All_Questions">
+              <button className="btn btn-dark ms-4" onClick={getQuestions}>
+                Volunteer
+              </button>
+            </Link>
           </div>
         </div>
         <div className="row mt-5"></div>

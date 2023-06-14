@@ -8,7 +8,7 @@ import { Alert } from "react-bootstrap";
 import "./index.css";
 import Navbar from "../Navbar";
 import TextTruncateToggle from "../Truncate/index";
-import { Link } from "react-router-dom";
+import { Link ,Navigate, useNavigate} from "react-router-dom";
 export default function Ques_Answer() {
   const [question, setQuestion] = useState(null);
   const [ans, setAns] = useState(null);
@@ -18,8 +18,9 @@ export default function Ques_Answer() {
   const Login_token = localStorage.getItem("Login_token");
   const User = localStorage.getItem("user");
   localStorage.setItem("Edit", false);
-// debugger
-// console.log(User)
+  const Navigate = useNavigate();
+  // debugger
+  // console.log(User)
   // const history = useHistory();
   useEffect(() => {
     axios
@@ -77,14 +78,14 @@ export default function Ques_Answer() {
     // localStorage.removeItem("QID");
     localStorage.setItem("ThroughPost", true);
     if (Login_token !== null) {
-      window.location.href = "/Post_Question";
+      // window.location.href = "/Post_Question";
       // localStorage.setItem("ThroughPost", true);
     } else {
       window.location.href = "/signin";
     }
   };
   const handleEdit = () => {
-    window.location.href = "/Post_Question";
+    // window.location.href = "/Post_Question";
     // history.push("/Post_Question");
     localStorage.setItem("Edit", true);
   };
@@ -92,29 +93,43 @@ export default function Ques_Answer() {
   if (question === null) {
     return <div>Loading...</div>;
   }
+
+  const Back =()=>{
+    Navigate(-1);
+  }
   return (
     <div className="container-fluied">
       <Navbar />
-      <div className="col-8 d-flex mx-auto justify-content-end mt-4">
-        {User === userinfo ? (
-          <button
-            className="btn btn-outline-success postquestion btn-lg me-3"
-            onClick={handleEdit}
-          >
-            Edit Question
-          </button>
-        ) : (
-          ""
-        )}
-        <button
-          className="btn btn-outline-success postquestion btn-lg"
-          onClick={handlePost}
-        >
-          Post Question
-        </button>
-      </div>
 
       <div className="container">
+        <div className="row">
+          <div className="col-2 mt-4">
+            <button className="btn btn-outline-success px-3" onClick={Back}> Back</button>
+          </div>
+          <div className="col-8 d-flex mx-auto justify-content-end mt-4">
+            {User === userinfo ? (
+              <Link to="/Post_Question">
+                <button
+                  className="btn btn-outline-success postquestion btn-lg me-3"
+                  onClick={handleEdit}
+                >
+                  Edit Question
+                </button>
+              </Link>
+            ) : (
+              ""
+            )}
+            <Link to={Login_token !== null ? "/Post_Question" : "/signin"}>
+              <button
+                className="btn btn-outline-success postquestion btn-lg"
+                onClick={handlePost}
+              >
+                Post Question
+              </button>
+            </Link>
+          </div>
+          <div className="col-2"></div>
+        </div>
         <div className="row">
           <div className="col-8 mt-5 mx-auto">
             <ol className="text-start">

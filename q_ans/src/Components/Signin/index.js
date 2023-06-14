@@ -1,142 +1,121 @@
-import React, { Component } from "react";
-import "./index.css";
-// import signup from "./Signup";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Base_url } from "../../Config";
 import axios from "axios";
-let username;
-let password;
-export default class Signin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-    };
-  }
-  handleuserName = (e) => {
-    username = e.target.value;
-    this.setState({ username: e.target.value });
+import "./index.css";
+
+const Signin = () => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const QID = localStorage.getItem("QID");
+  const volunteer = localStorage.getItem("volunteer");
+  const isPost = localStorage.getItem("ThroughPost");
+  const OnlyUser = localStorage.getItem("OnlyUser");
+  const signin = localStorage.getItem("signin");
+  const Login_token = localStorage.getItem("Login_token");
+
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
   };
-  handlePassword = (e) => {
-    password = e.target.value;
-    this.setState({ password: e.target.value });
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
   };
-  Signin = (event) => {
+
+  const handleSignIn = (event) => {
     event.preventDefault();
+
     const data = {
-      username: this.state.username,
-      password: this.state.password,
+      username: username,
+      password: password,
     };
+
     axios
       .post(`${Base_url}/api/login/`, data)
       .then((res) => {
-        // alert("Signin Successfull");
-        const QID = localStorage.getItem("QID");
-        const volunteer = localStorage.getItem("volunteer");
-        const isPost = localStorage.getItem("ThroughPost");
-        const OnlyUser = localStorage.getItem("OnlyUser");
-        localStorage.setItem("user", this.state.username);
+        localStorage.setItem("user", username);
+
         if (volunteer === "false" && QID !== null) {
           localStorage.setItem("volunteer", true);
-          window.location.href = "/All_Questions";
           window.localStorage.setItem("Login_token", res.data.access);
-        } else if (QID !== null) {
-          window.location.href = "/Ques_Answer/";
+          navigate("/All_Questions");
+        } else if (QID !== null && signin !== "true") {
           window.localStorage.setItem("Login_token", res.data.access);
-        } else if (isPost === "true" ||(volunteer==="false"&&OnlyUser==="false")) {
-          window.location.href = "/Post_Question";
+          navigate("/Ques_Answer/");
+        } else if (
+          isPost === "true" ||
+          (volunteer === "false" && OnlyUser === "false")
+        ) {
           window.localStorage.setItem("Login_token", res.data.access);
+          navigate("/Post_Question");
         } else {
-          window.location.href = "/All_Questions";
           window.localStorage.setItem("Login_token", res.data.access);
+          navigate("/All_Questions");
         }
-        // localStorage.setItem("signin", true);
       })
-      .catch((err) => {});
+      .catch((err) => {
+      });
 
-    if (document.myform.user.value == "") {
-      alert("enter usernsme");
-      document.myform.user.focus();
-      return false;
+    if (username === "") {
+      alert("Enter username");
+      return;
     }
-    if (document.myform.pass.value == "") {
-      alert("enter password");
-      document.myform.pass.focus();
-      return false;
-    } else {
-      // data.forEach((data) => {
-      //   if (data.email === UserName && data.password === password) {
-      //     count = count + 1;
-      //   }
-      // });
-      // if (count > 0) {
-      //   alert("sign up successfull");
-      //   count = count - 1;
-      //   window.location.reload();
-      // } else {
-      //   alert("Email address or password not matched");
-      // }
+
+    if (password === "") {
+      alert("Enter password");
+      return;
     }
+
   };
-  render() {
-    return (
-      <form name="myform">
-        <center>
-          <div id="box">
-            <p id="form">Login</p>
-            <label className="signinlabel">User name</label>
 
-            <input
-              placeholder="Email..."
-              onChange={(e) => {
-                this.handleuserName(e);
-              }}
-              type="text"
-              className="form-control signin-form-control"
-              name="user"
-            />
-            <br />
-            <label className="signinlabel">Password </label>
-            <input
-              placeholder="Password..."
-              onChange={(e) => {
-                this.handlePassword(e);
-              }}
-              type="password"
-              className="form-control signin-form-control"
-              name="pass"
-            />
-            <div className="d-flex">
-              <input type="checkbox" />
-              <span> Remember me</span>
-              <Link to="/Forgot_password" className="ms-3 text-decoration">
-                Forgot password?
-              </Link>
-            </div>
-            <br />
-            <div className="mt-2">
-              <button
-                onClick={(e) => {
-                  this.Signin(e);
-                }}
-                id="login"
-              >
-                Login
-              </button>
-            </div>
-
-            <div className="mt-3">
-              <p>
-                Not a member?
-                <Link to="/Signup" className="text-decoration">
-                  Sign up now{" "}
-                </Link>
-              </p>
-            </div>
+  return (
+    <form>
+      <center>
+        <div id="box">
+          <p id="form">Login</p>
+          <label className="signinlabel">User name</label>
+          <input
+            placeholder="Email..."
+            onChange={handleUsername}
+            type="text"
+            className="form-control signin-form-control"
+            name="user"
+          />
+          <br />
+          <label className="signinlabel">Password</label>
+          <input
+            placeholder="Password..."
+            onChange={handlePassword}
+            type="password"
+            className="form-control signin-form-control"
+            name="pass"
+          />
+          <div className="d-flex justify-content-between">
+            <span><input type="checkbox" />
+            <span> Remember me</span></span>
+            <Link to="/Forgot_password" className="ms-3 text-decoration">
+              Forgot password?
+            </Link>
           </div>
-        </center>
-      </form>
-    );
-  }
-}
+          <br />
+          <div className="mt-2">
+            <button onClick={handleSignIn} id="login">
+              Login
+            </button>
+          </div>
+          <div className="mt-3">
+            <p>
+              Not a member?
+              <Link to="/Signup" className="text-decoration">
+                Sign up now
+              </Link>
+            </p>
+          </div>
+        </div>
+      </center>
+    </form>
+  );
+};
+
+export default Signin;
