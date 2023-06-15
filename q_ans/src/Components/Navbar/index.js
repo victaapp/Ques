@@ -5,21 +5,27 @@ import "./index.css";
 import logo from "../images/logo.png";
 const Navbar = () => {
   const HandleSignOut = () => {
-    localStorage.removeItem("Login_token");
-    localStorage.removeItem("ThroughPost");
+    localStorage.clear();
+    window.location.href = "/";
+    // localStorage.removeItem("ThroughPost");
+    // localStorage.removeItem("volunteer");
+    // localStorage.removeItem("false");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("false");
+    // localStorage.removeItem("false");
   };
   const signin = localStorage.getItem("Login_token");
-const HandleSignIn = ()=>{
-  const QID = localStorage.getItem("QID");
-  localStorage.setItem("signin",true)
-  // if(QID !==null){
-  //   window.location.href = "/Signin";
-  //   localStorage.removeItem("ThroughPost");
-  // }else{
-  //       window.location.href = "/Signin";
+  const HandleSignIn = () => {
+    const QID = localStorage.getItem("QID");
+    localStorage.setItem("signin", true);
+    // if(QID !==null){
+    //   window.location.href = "/Signin";
+    //   localStorage.removeItem("ThroughPost");
+    // }else{
+    //       window.location.href = "/Signin";
 
-  // }
-}
+    // }
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -58,15 +64,11 @@ const HandleSignIn = ()=>{
           </form>
           {signin !== null ? (
             <div className="me-5">
-              <button className="btn btn-outline-success signbtn">
-                <Link
-                  id="signbtn"
-                  to="/"
-                  style={{ textDecoration: "none", color: "#198754" }}
-                  onClick={HandleSignOut}
-                >
-                  Logout
-                </Link>
+              <button
+                className="btn btn-outline-success signbtn"
+                onClick={HandleSignOut}
+              >
+                Logout
               </button>
             </div>
           ) : (

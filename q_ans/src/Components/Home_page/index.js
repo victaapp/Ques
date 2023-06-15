@@ -4,18 +4,18 @@ import { Link } from "react-router-dom";
 import AllQuestions from "../All_Questions";
 // import 'react-paginate/dist/react-paginate.css';
 const Home_page = () => {
-  const [volunteer, setVolunteer] = useState(false);
+  // const [volunteer, setVolunteer] = useState(false);
   // const [currentPage, setCurrentPage] = useState(0);
   // localStorage.setItem("Login_token", "false");
-  localStorage.setItem("OnlyUser", false);
-  localStorage.setItem("volunteer", volunteer);
+  // localStorage.setItem("OnlyUser", false);
+  // localStorage.setItem("volunteer", volunteer);
   // localStorage.removeItem("QID");
   // localStorage.removeItem("user");
 
   const getQuestions = () => {
     // window.location.href = "/All_Questions";
-    setVolunteer(true);
-    localStorage.setItem("volunteer", volunteer);
+    // setVolunteer(true);
+    localStorage.setItem("volunteer", true);
   };
   const OnlyUser = () => {
     // window.location.href = "/All_Questions";

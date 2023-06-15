@@ -7,8 +7,8 @@ import "react-quill/dist/quill.snow.css";
 import { Alert } from "react-bootstrap";
 import "./index.css";
 import Navbar from "../Navbar";
-import TextTruncateToggle from "../Truncate/index";
-import { Link ,Navigate, useNavigate} from "react-router-dom";
+// import TextTruncateToggle from "../Truncate/index";
+import { Link, useNavigate } from "react-router-dom";
 export default function Ques_Answer() {
   const [question, setQuestion] = useState(null);
   const [ans, setAns] = useState(null);
@@ -17,11 +17,10 @@ export default function Ques_Answer() {
   const QID = Number(localStorage.getItem("QID"));
   const Login_token = localStorage.getItem("Login_token");
   const User = localStorage.getItem("user");
+  // const scrollToEditor = localStorage.getItem("scrollToEditor");
+  const navigate = useNavigate();
   localStorage.setItem("Edit", false);
-  const Navigate = useNavigate();
-  // debugger
-  // console.log(User)
-  // const history = useHistory();
+ 
   useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/${QID}/`)
@@ -31,17 +30,14 @@ export default function Ques_Answer() {
       })
       .catch((err) => {});
   }, []);
-
   useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/${QID}/answers/`)
       .then((res) => {
         setAns(res.data);
-        console.log(res.data);
       })
       .catch((err) => {});
   }, []);
-
   const HandleChange = (e) => {
     setGiveAns(e);
   };
@@ -69,33 +65,49 @@ export default function Ques_Answer() {
         })
         .then((res) => {
           alert("Answer Posted Successfully");
-          window.location.href = "/Ques_Answer";
+          navigate("/All_Questions");
         })
         .catch((err) => {});
     }
   };
   const handlePost = () => {
-    // localStorage.removeItem("QID");
     localStorage.setItem("ThroughPost", true);
     if (Login_token !== null) {
-      // window.location.href = "/Post_Question";
-      // localStorage.setItem("ThroughPost", true);
     } else {
-      window.location.href = "/signin";
+      navigate("/signin");
     }
   };
+
   const handleEdit = () => {
-    // window.location.href = "/Post_Question";
-    // history.push("/Post_Question");
     localStorage.setItem("Edit", true);
   };
 
+  const Back = () => {
+    navigate(-1);
+  };
+
+  const scrollToAnswerEditor = () => {
+    let ansEditor = document.getElementById("Ans_Editor");
+    if (Login_token !== null) {
+      ansEditor.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // localStorage.setItem("Give_Ans",true);
+      localStorage.setItem("scrollToEditor", true);
+      navigate("/signin");
+    }
+  };
+ // useEffect(()=>{
+  //   // debugger
+  //   const val =localStorage.getItem("scrollToEditor")
+  //   if(val=="true"){
+  //     debugger
+  //     // let ansEditor = document.getElementById("Ans_Editor")
+  //     //    ansEditor.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // },[])
+
   if (question === null) {
     return <div>Loading...</div>;
-  }
-
-  const Back =()=>{
-    Navigate(-1);
   }
   return (
     <div className="container-fluied">
@@ -104,7 +116,9 @@ export default function Ques_Answer() {
       <div className="container">
         <div className="row">
           <div className="col-2 mt-4">
-            <button className="btn btn-outline-success px-3" onClick={Back}> Back</button>
+            <button className="btn btn-outline-success px-3" onClick={Back}>
+              Back
+            </button>
           </div>
           <div className="col-8 d-flex mx-auto justify-content-end mt-4">
             {User === userinfo ? (
@@ -139,22 +153,29 @@ export default function Ques_Answer() {
                   <li className="text-dark">
                     <div>
                       <p className="text-info h5">{question.title}</p>
+                      <p>{question.description}</p>
 
-                      <TextTruncateToggle
-                        text={question.description}
-                        truncateLength={280}
-                      />
-                      <div className="text-dark mt-3 text-end">
-                        <span className="me-2">Ask By</span>
-                        <i className="text-danger mx-1">
-                          {question.ask_byy.username}
-                        </i>
-                        <span className="mx-1">on</span>
-                        <span className="text-dark h6">
-                          {moment(question.ask_byy.date_joined).format(
-                            "YYYY-MM-DD"
-                          )}
-                        </span>
+                      <div className="text-dark mt-3 d-flex justify-content-between">
+                        <div>
+                          <button
+                            className="btn btn-secondary"
+                            onClick={scrollToAnswerEditor}
+                          >
+                            Give Answer
+                          </button>
+                        </div>
+                        <div>
+                          <span className="me-2 Ans_By">Ask By</span>
+                          <i className="text-danger mx-1">
+                            {question.ask_byy.username}
+                          </i>
+                          <span className="mx-1">on</span>
+                          <span className="text-dark h6">
+                            {moment(question.ask_byy.date_joined).format(
+                              "YYYY-MM-DD"
+                            )}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </li>
@@ -174,8 +195,20 @@ export default function Ques_Answer() {
             <ol>
               {ans !== null
                 ? ans.map((ans) => (
-                    <li key={ans.id} className="mt-5">
+                    <li key={ans.id} className="mt-5 text-start">
                       {ans.description}
+                      <div className="d-blok text-end">
+                        <span className="me-2 Ans_By">Answer By</span>
+                        <i className="text-danger mx-1">
+                          {question.ask_byy.username}
+                        </i>
+                        <span className="mx-1">on</span>
+                        <span className="text-dark h6">
+                          {moment(question.ask_byy.date_joined).format(
+                            "YYYY-MM-DD"
+                          )}
+                        </span>
+                      </div>
                     </li>
                   ))
                 : "Answers are not available"}
@@ -184,9 +217,9 @@ export default function Ques_Answer() {
         </div>
         <hr className="w-75 mx-auto" />
 
-        <div className="row">
+        <div className="row" id="Ans_Editor">
           {Login_token !== null ? (
-            <div className="col-8 mx-auto">
+            <div className="col-8 mx-auto mb-5">
               <p className="text-start my-4" style={{ fontSize: "22px" }}>
                 Your Answers
               </p>

@@ -4,3 +4,10 @@
 .postquestion{
   padding: 7px 8px !important;
 }
+
+.Ans_By{
+  background: #2f6f44;
+    padding: 0px 5px 3px 5px;
+    border-radius: 3px;
+    color: #fff;
+}

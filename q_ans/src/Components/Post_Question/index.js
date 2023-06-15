@@ -42,7 +42,8 @@ const TextEditor = () => {
       })
       .then((res) => {
         alert(isEdit==="true" ?"Question Updated Successfully":"Question Posted Successfully");
-        window.location.href = "/All_Questions";
+        // window.location.href = "/All_Questions";
+        Navigate("/All_Questions")
       })
       .catch((err) => {
         console.error(err);

@@ -32,7 +32,7 @@
   text-decoration: none;
   color: black;
 }
-.postquestion{
+.postquestion {
   padding: 0px 20px !important;
 }
 
@@ -40,6 +40,20 @@
   text-decoration: underline;
 }
 
-#signin:hover{
- color: #fff !important;
+#signin:hover {
+  color: #fff !important;
+}
+
+#ques_title {
+  cursor: pointer;
+}
+#ques_title:hover {
+  color: rgb(68, 148, 154) !important;
+}
+
+.Ask_By {
+  background: #2f6f44;
+  padding: 0px 5px 3px 5px;
+  border-radius: 3px;
+  color: #fff;
 }

@@ -14,7 +14,8 @@ const Signin = () => {
   const OnlyUser = localStorage.getItem("OnlyUser");
   const signin = localStorage.getItem("signin");
   const Login_token = localStorage.getItem("Login_token");
-
+  const scrollToEditor = localStorage.getItem("scrollToEditor");
+  const Edit = localStorage.getItem("Edit");
   const handleUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -35,27 +36,47 @@ const Signin = () => {
       .post(`${Base_url}/api/login/`, data)
       .then((res) => {
         localStorage.setItem("user", username);
-
         if (volunteer === "false" && QID !== null) {
           localStorage.setItem("volunteer", true);
           window.localStorage.setItem("Login_token", res.data.access);
           navigate("/All_Questions");
-        } else if (QID !== null && signin !== "true") {
-          window.localStorage.setItem("Login_token", res.data.access);
-          navigate("/Ques_Answer/");
-        } else if (
-          isPost === "true" ||
-          (volunteer === "false" && OnlyUser === "false")
-        ) {
+        } else if (volunteer === "true" && isPost === "true" && Edit === null) {
           window.localStorage.setItem("Login_token", res.data.access);
           navigate("/Post_Question");
+        } else if (volunteer === "true" && signin === "true" && Edit === null) {
+          window.localStorage.setItem("Login_token", res.data.access);
+          navigate("/All_Questions");
+        } else if (QID !== null && volunteer === "true" && Edit === "false") {
+          window.localStorage.setItem("Login_token", res.data.access);
+          navigate("/Ques_Answer");
+        } else if (
+          QID !== null &&
+          volunteer === "true" &&
+          Edit === "false" &&
+          isPost === "true"
+        ) {
+          window.localStorage.setItem("Login_token", res.data.access);
+          navigate("/Ques_Answer");
         } else {
           window.localStorage.setItem("Login_token", res.data.access);
           navigate("/All_Questions");
         }
+        // scrollToEditor!==undefined
+        // else if (
+        //   isPost === "true" ||
+        //   (volunteer === "false" && OnlyUser === "false")
+        // ) {
+        //   window.localStorage.setItem("Login_token", res.data.access);
+        //   navigate("/Post_Question");
+        // }
+        // else if(scrollToEditor!==undefined){
+        //   // localStorage.removeItem("Give_Ans");
+        //   window.localStorage.setItem("Login_token", res.data.access);
+        //   navigate("/Ques_Answer");
+        //   scrollToEditor.scrollIntoView({ behavior: "smooth" });
+        // }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
 
     if (username === "") {
       alert("Enter username");
@@ -66,7 +87,6 @@ const Signin = () => {
       alert("Enter password");
       return;
     }
-
   };
 
   return (
@@ -92,8 +112,10 @@ const Signin = () => {
             name="pass"
           />
           <div className="d-flex justify-content-between">
-            <span><input type="checkbox" />
-            <span> Remember me</span></span>
+            <span>
+              <input type="checkbox" />
+              <span> Remember me</span>
+            </span>
             <Link to="/Forgot_password" className="ms-3 text-decoration">
               Forgot password?
             </Link>
