@@ -48,6 +48,7 @@ const Signin = () => {
           navigate("/All_Questions");
         } else if (QID !== null && volunteer === "true" && Edit === "false") {
           window.localStorage.setItem("Login_token", res.data.access);
+          localStorage.setItem("scrollToEditor", true);
           navigate("/Ques_Answer");
         } else if (
           QID !== null &&
@@ -56,6 +57,7 @@ const Signin = () => {
           isPost === "true"
         ) {
           window.localStorage.setItem("Login_token", res.data.access);
+          localStorage.setItem("scrollToEditor", true);
           navigate("/Ques_Answer");
         } else {
           window.localStorage.setItem("Login_token", res.data.access);

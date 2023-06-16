@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Base_url } from "../../Config";
 import moment from "moment";
@@ -7,7 +7,6 @@ import "react-quill/dist/quill.snow.css";
 import { Alert } from "react-bootstrap";
 import "./index.css";
 import Navbar from "../Navbar";
-// import TextTruncateToggle from "../Truncate/index";
 import { Link, useNavigate } from "react-router-dom";
 export default function Ques_Answer() {
   const [question, setQuestion] = useState(null);
@@ -17,10 +16,11 @@ export default function Ques_Answer() {
   const QID = Number(localStorage.getItem("QID"));
   const Login_token = localStorage.getItem("Login_token");
   const User = localStorage.getItem("user");
-  // const scrollToEditor = localStorage.getItem("scrollToEditor");
+  const [isRendered, setIsRendered] = useState(false);
+  const ansEditorRef = useRef(null);
   const navigate = useNavigate();
   localStorage.setItem("Edit", false);
- 
+
   useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/${QID}/`)
@@ -30,22 +30,27 @@ export default function Ques_Answer() {
       })
       .catch((err) => {});
   }, []);
+
   useEffect(() => {
     axios
       .get(`${Base_url}/api/all-questions/${QID}/answers/`)
       .then((res) => {
         setAns(res.data);
+        setIsRendered(true);
       })
       .catch((err) => {});
   }, []);
+
   const HandleChange = (e) => {
     setGiveAns(e);
   };
+
   const removeTags = (html) => {
-    const tempDivElement = document.createElement("ReactQuill");
+    const tempDivElement = document.createElement("div");
     tempDivElement.innerHTML = html;
     return tempDivElement.textContent || tempDivElement.innerText || "";
   };
+
   const handleGiveAnswer = () => {
     const plainTextContent = removeTags(giveAns);
     if (plainTextContent === "") {
@@ -70,6 +75,7 @@ export default function Ques_Answer() {
         .catch((err) => {});
     }
   };
+
   const handlePost = () => {
     localStorage.setItem("ThroughPost", true);
     if (Login_token !== null) {
@@ -87,28 +93,25 @@ export default function Ques_Answer() {
   };
 
   const scrollToAnswerEditor = () => {
-    let ansEditor = document.getElementById("Ans_Editor");
     if (Login_token !== null) {
-      ansEditor.scrollIntoView({ behavior: "smooth" });
+      ansEditorRef.current.scrollIntoView({ behavior: "smooth" });
     } else {
-      // localStorage.setItem("Give_Ans",true);
       localStorage.setItem("scrollToEditor", true);
       navigate("/signin");
     }
   };
- // useEffect(()=>{
-  //   // debugger
-  //   const val =localStorage.getItem("scrollToEditor")
-  //   if(val=="true"){
-  //     debugger
-  //     // let ansEditor = document.getElementById("Ans_Editor")
-  //     //    ansEditor.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // },[])
+  useEffect(() => {
+    const scrollToEditor = localStorage.getItem("scrollToEditor");
+    if (scrollToEditor === "true" && isRendered && ansEditorRef.current) {
+      ansEditorRef.current.scrollIntoView({ behavior: "smooth" });
+      localStorage.removeItem("scrollToEditor");
+    }
+  }, [isRendered, ansEditorRef.current]);
 
   if (question === null) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="container-fluied">
       <Navbar />
@@ -217,7 +220,7 @@ export default function Ques_Answer() {
         </div>
         <hr className="w-75 mx-auto" />
 
-        <div className="row" id="Ans_Editor">
+        <div className="row" ref={ansEditorRef} id="Ans_Editor">
           {Login_token !== null ? (
             <div className="col-8 mx-auto mb-5">
               <p className="text-start my-4" style={{ fontSize: "22px" }}>
